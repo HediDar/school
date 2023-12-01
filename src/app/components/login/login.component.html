@@ -1,0 +1,124 @@
+<app-welcome title="Login"></app-welcome>
+
+<section class="vh-100">
+  <div class="container py-5 h-100">
+    <div class="row d-flex align-items-center justify-content-center h-100">
+      <div class="col-md-8 col-lg-7 col-xl-6">
+        <img
+          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+          class="img-fluid"
+          alt="Phone image"
+        />
+      </div>
+      <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+        <form [formGroup]="loginForm">
+          <!-- Email input -->
+          <div
+            *ngIf="
+              loginForm.controls['telephone'].invalid &&
+              (loginForm.controls['telephone'].touched ||
+                loginForm.controls['telephone'].dirty)
+            "
+          >
+            <div
+              *ngIf="loginForm.controls['telephone'].errors?.['required']"
+              style="color: red"
+            >
+              Telephone is required
+            </div>
+          </div>
+
+          <div class="form-outline mb-4">
+            <input
+              type="number"
+              id="form1Example13"
+              class="form-control form-control-lg"
+              placeholder="Enter telephone"
+              formControlName="telephone"
+            />
+          </div>
+          <div
+            *ngIf="
+              loginForm.controls['password'].invalid &&
+              (loginForm.controls['password'].touched ||
+                loginForm.controls['password'].dirty)
+            "
+          >
+            <div
+              *ngIf="loginForm.controls['password'].errors?.['required']"
+              style="color: red"
+            >
+              Password is required
+            </div>
+          </div>
+
+          <!-- Password input -->
+          <div class="form-outline mb-4">
+            <input
+              type="password"
+              id="form1Example23"
+              class="form-control form-control-lg"
+              placeholder="Enter password"
+              formControlName="password"
+            />
+          </div>
+
+          <!-- Submit button -->
+          <button
+            type="submit"
+            (click)="login()"
+            class="btn btn-primary btn-lg btn-block"
+          >
+            Sign in
+          </button>
+          <div class="row mt-5">
+            <div class="col-4"></div>
+            <div class="col-4 text-center">
+              <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+            </div>
+            <div class="col-4"></div>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg btn-block"
+            (click)="signup('student')"
+          >
+            Sign up as a student
+          </button>
+          <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4 text-center">
+              <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+            </div>
+            <div class="col-4"></div>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg btn-block"
+            (click)="signup('teacher')"
+          >
+            Sign up as a teacher
+          </button>
+
+          <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4 text-center">
+              <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+            </div>
+            <div class="col-4"></div>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg btn-block"
+            (click)="signup('parent')"
+          >
+            Sign up as a parent
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
