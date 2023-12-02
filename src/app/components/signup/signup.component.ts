@@ -64,6 +64,18 @@ export class SignupComponent implements OnInit {
       .subscribe(
         (success) => {
           console.log(success);
+          if (success.message == 'email already in use') {
+            alert('Email already in use!');
+          } else if (success.message == 'phone number already in use') {
+            alert('Phone number already in use!');
+          } else if (
+            success.message == 'You must select a file for your user'
+          ) {
+            alert('You must select a file for your user!');
+          } else {
+            alert("you've been subscribed succesfully!");
+            this.router.navigate(['login']);
+          }
         },
         (error) => {
           console.log(error);

@@ -17,6 +17,13 @@ import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './components/signup/signup.component';
 import { SafePipe } from './pipes/safe.pipe';
 import { HttpClientModule } from '@angular/common/http';
+import { AddOrEditCourseComponent } from './components/add-or-edit-course/add-or-edit-course.component';
+import { CoursesTabComponent } from './components/courses-tab/courses-tab.component';
+import { AdminCoursesComponent } from './components/admin-courses/admin-courses.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { AuthGuard } from './services/auth.guard';
+import { TeacherOrAdminGuard } from './services/teacher-or-admin.guard';
 
 @NgModule({
   declarations: [
@@ -32,6 +39,11 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     SignupComponent,
     SafePipe,
+    AddOrEditCourseComponent,
+    CoursesTabComponent,
+    AdminCoursesComponent,
+    AdminComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +52,7 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [AuthGuard,TeacherOrAdminGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

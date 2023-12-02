@@ -65,12 +65,24 @@
 
           <!-- Submit button -->
           <button
+            [disabled]="loginForm.invalid"
             type="submit"
             (click)="login()"
             class="btn btn-primary btn-lg btn-block"
           >
             Sign in
           </button>
+
+          <div class="row mt-2">
+            <div class="col-4"></div>
+            <div class="col-4 text-center">
+              <p style="color: red">
+                {{ errorMessage }}
+              </p>
+            </div>
+            <div class="col-4"></div>
+          </div>
+
           <div class="row mt-5">
             <div class="col-4"></div>
             <div class="col-4 text-center">

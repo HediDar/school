@@ -55,23 +55,84 @@ route.post(
   multer({ storage: storage }).single("file"),
   (req, res) => {
     console.log("in signup BL");
-    let user = new User(req.body);
-    bcrypt.hash(req.body.password, 8).then((cryptedPwd) => {
-      req.body.password = cryptedPwd;
-      if (req.body.role != "teacher")
-        req.body.avatar = `http://localhost:3000/files/${req.file.filename}`;
-      else req.body.cv = `http://localhost:3000/files/${req.file.filename}`;
-      let user = new User(req.body);
-      user.save(async function (error, doc) {
-        console.log("here doc", doc);
-        if (error) {
-          res.json({ message: "an error occured while saving user" });
-        } else {
-          res.json({ message: "user added succesfully" });
-        }
-      });
+
+    User.findOne({ email: req.body.email }).then((findedUser) => {
+      if (findedUser) {
+        return res.json({ message: "email already in use" });
+      } else {
+        User.findOne({ telephone: req.body.telephone }).then((findedUser) => {
+          if (findedUser) {
+            return res.json({ message: "phone number already in use" });
+          } else {
+            let user = new User(req.body);
+            bcrypt.hash(req.body.password, 8).then((cryptedPwd) => {
+              req.body.password = cryptedPwd;
+              if (!req.file) {
+                return res.json({
+                  message: "You must select a file for your user",
+                });
+              }
+              if (req.body.role != "teacher")
+                req.body.avatar = `http://localhost:3000/files/${req.file.filename}`;
+              else
+                req.body.cv = `http://localhost:3000/files/${req.file.filename}`;
+              let user = new User(req.body);
+              user.save(async function (error, doc) {
+                console.log("here doc", doc);
+                if (error) {
+                  res.json({ message: "an error occured while saving user" });
+                } else {
+                  res.json({ message: "user added succesfully" });
+                }
+              });
+            });
+          }
+        });
+      }
     });
   }
 );
+
+//business logic login
+route.post("/login", (req, res) => {
+  console.log("in login bl");
+  console.log(req.body);
+  let myUser;
+
+  User.findOne({ telephone: req.body.telephone })
+    .then((findedUser) => {
+      if (!findedUser) {
+        return res.json({ message: "check your phone number" });
+      } else {
+        myUser = findedUser;
+        return bcrypt.compare(req.body.password, findedUser.password);
+      }
+    })
+    .then((cryptedPwd) => {
+      console.log(cryptedPwd);
+      if (cryptedPwd) {
+        let user_to_send = {
+          id: myUser._id,
+          firstName: myUser.firstName,
+          lastName: myUser.lastName,
+          cv: myUser.cv,
+          avatar: myUser.avatar,
+          role: myUser.role,
+        };
+
+        // generate token
+        const token = jwt.sign(user_to_send, secretKey, {
+          expiresIn: "1h",
+        });
+
+        res.json({
+          message: "welcome",
+          token: token,
+        });
+      } else {
+        res.json({ message: "check your password" });
+      }
+    });
+});
 
 module.exports = route;

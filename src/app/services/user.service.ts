@@ -8,6 +8,14 @@ export class UserService {
   userUrl: string = 'http://localhost:3000/users'; //adresse a laquelle on va envoyer
   constructor(private httpClient: HttpClient) {}
 
+  login(obj: any) {
+    // can make token string or any because user is sended as a string token
+    return this.httpClient.post<{ message: string; token: any }>(
+      `${this.userUrl}/login`,
+      obj
+    );
+  }
+
   signUp(obj: any, file: File) {
     let formData = new FormData();
     formData.append('file', file);

@@ -21,27 +21,83 @@
                 <div class="main-menu d-none d-lg-block">
                   <nav>
                     <ul id="navigation">
-                      <li class="active"><a href="index.html">Home</a></li>
-                      <li><a href="courses.html">Courses</a></li>
-                      <li><a href="about.html">About</a></li>
-                      <li>
-                        <a href="#">Blog</a>
+                      <li class="active"><a routerLink="">Home</a></li>
+                      <li
+                        *ngIf="
+                          isLoggedIn() && (role == 'admin' || role == 'teacher')
+                        "
+                      >
+                        <a routerLink="addCourse">Add courses</a>
+                      </li>
+                      <li
+                        *ngIf="
+                          isLoggedIn() && (role == 'admin' || role == 'teacher')
+                        "
+                      >
+                        <a routerLink="myCourses">My courses</a>
+                      </li>
+
+                      <li
+                        *ngIf="
+                          isLoggedIn() &&
+                          (role == 'parent' || role == 'student')
+                        "
+                      >
+                        <a *ngIf="role == 'student'" routerLink="studentCourses"
+                          >My courses</a
+                        >
+                        <a *ngIf="role == 'parent'" routerLink="studentCourses"
+                          >My child courses</a
+                        >
+                      </li>
+
+                      <li *ngIf="isLoggedIn() && role == 'admin'">
+                        <a routerLink="admin">Admin</a>
                         <ul class="submenu">
-                          <li><a href="blog.html">Blog</a></li>
+                          <li><a href="blog.html">Manage users</a></li>
                           <li>
-                            <a href="blog_details.html">Blog Details</a>
+                            <a href="blog_details.html">Manage courses</a>
                           </li>
-                          <li><a href="elements.html">Element</a></li>
                         </ul>
                       </li>
-                      <li><a href="contact.html">Contact</a></li>
-                      <!-- Button -->
-                      <li class="button-header margin-left">
-                        <a href="#" class="btn">Join</a>
+                      <li *ngIf="isLoggedIn()">
+                        <a routerLink="profile">My profile</a>
                       </li>
-                      <li class="button-header">
-                        <a href="login.html" class="btn btn3">Log in</a>
+
+                      <li>
+                        <a routerLink="">Contact</a>
                       </li>
+
+                      <li>
+                        <a routerLink="">Blog</a>
+                      </li>
+
+                      <li *ngIf="isLoggedIn()">
+                        <a
+                          routerLink="signup"
+                          (click)="logout()"
+                          class="nav-link"
+                          >LogOut</a
+                        >
+                        <!-- Button -->
+                      </li>
+
+                      <li *ngIf="!isLoggedIn()">
+                        <a routerLink="signupStudent">Sign up</a>
+                      </li>
+                      <li *ngIf="!isLoggedIn()">
+                        <a routerLink="login">Sign in</a>
+                      </li>
+
+                      <!-- <li
+                        *ngIf="!isLoggedIn()"
+                        class="button-header margin-left"
+                      >
+                        <a routerLink="signupStudent" class="btn btn3">Join</a>
+                      </li>
+                      <li *ngIf="!isLoggedIn()" class="button-header">
+                        <a routerLink="login" class="btn btn3">Sign in</a>
+                      </li> -->
                     </ul>
                   </nav>
                 </div>
