@@ -2,6 +2,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MustMatch } from 'src/app/validators/confirmPWD';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-signup',
@@ -14,7 +15,11 @@ export class SignupComponent implements OnInit {
   role: string = 'teacher';
   speciality: string = 'web';
   filePreview: any = null;
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private formBuilder: FormBuilder,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     if (this.router.url == '/signupStudent') {
@@ -50,7 +55,20 @@ export class SignupComponent implements OnInit {
     console.log(this.role);
   }
   signup() {
-    console.log(this.signupForm.value);
+    if (this.role == 'teacher')
+      this.signupForm.value.speciality = this.speciality;
+    this.signupForm.value.role = this.role;
+
+    this.userService
+      .signUp(this.signupForm.value, this.signupForm.value.file)
+      .subscribe(
+        (success) => {
+          console.log(success);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
   login() {
     this.router.navigate(['login']);
@@ -83,12 +101,5 @@ export class SignupComponent implements OnInit {
       this.filePreview = reader.result as string;
     };
     reader.readAsDataURL(file);
-
-    // let fileReader = new FileReader();
-    // fileReader.onload = (e) => {
-    //   console.log(fileReader.result);
-    //   this.filePreview = fileReader.result;
-    // };
-    // fileReader.readAsText(file);
   }
 }
