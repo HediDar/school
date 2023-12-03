@@ -210,6 +210,24 @@ route.put("/editProfile", async function (req, res) {
   }
 });
 
+// accept user BL
+route.get("/acceptUser/:id", (req, res) => {
+  // traitement de la requete
+  console.log("in accept user bl");
+  console.log(0, req.params.id);
+
+  User.findById(req.params.id).then((doc) => {
+    let user=doc;
+    user.status = "OK";
+    let userObj = new User(user);
+    User.updateOne({ _id: user._id }, userObj).then((response) => {
+      response.nModified == 1
+        ? res.json({ message: "user accepted" })
+        : res.json({ message: "error" });
+    });
+  });
+});
+
 // get user by id
 route.get("/:id", (req, res) => {
   console.log("in get user by id BL");

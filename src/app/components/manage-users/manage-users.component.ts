@@ -25,11 +25,24 @@ export class ManageUsersComponent implements OnInit {
     );
   }
 
-  showCV(cv:any) {
+  showCV(cv: any) {
     window.open(cv, '_blank');
   }
   acceptUser(id: string) {
-    alert('accept');
+
+
+    this.userService.acceptUser(id).subscribe(
+      (success) => {
+        console.log(success);
+        if (success.message == 'user accepted') {
+          alert('Teacher accepted');
+          this.getAllUsers();
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
   delete(id: string) {
     this.userService.deleteUserById(id).subscribe(

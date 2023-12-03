@@ -24,6 +24,13 @@ export class UserService {
     );
   }
 
+  acceptUser(id: string) {
+    // can make token string or any because user is sended as a string token
+    return this.httpClient.get<{ message: string }>(
+      `${this.userUrl}/acceptUser/${id}`
+    );
+  }
+
   getUserById(id: any) {
     return this.httpClient.get<{ user: any }>(`${this.userUrl}/${id}`);
   }
