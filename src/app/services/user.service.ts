@@ -15,6 +15,21 @@ export class UserService {
       obj
     );
   }
+  // edit profile
+  editProfile(obj: any) {
+    // can make token string or any because user is sended as a string token
+    return this.httpClient.put<{ message: string }>(
+      `${this.userUrl}/editProfile`,
+      obj
+    );
+  }
+
+
+
+  getUserById(id: any) {
+    return this.httpClient.get<{ user: any }>(`${this.userUrl}/${id}`);
+  }
+
 
   signUp(obj: any, file: File) {
     let formData = new FormData();

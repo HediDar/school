@@ -1,1 +1,267 @@
-<p>profile works!</p>
+<app-welcome title="Update profile"></app-welcome>
+
+<div class="container-xl px-4 mt-4">
+  <!-- Account page navigation-->
+  <nav class="nav nav-borders">
+    <a
+      class="nav-link active ms-0"
+      href="https://www.bootdey.com/snippets/view/bs5-edit-profile-account-details"
+      target="__blank"
+      >Profile</a
+    >
+    <a
+      class="nav-link"
+      href="https://www.bootdey.com/snippets/view/bs5-profile-billing-page"
+      target="__blank"
+      >Billing</a
+    >
+    <a
+      class="nav-link"
+      href="https://www.bootdey.com/snippets/view/bs5-profile-security-page"
+      target="__blank"
+      >Security</a
+    >
+    <a
+      class="nav-link"
+      href="https://www.bootdey.com/snippets/view/bs5-edit-notifications-page"
+      target="__blank"
+      >Notifications</a
+    >
+  </nav>
+  <hr class="mt-0 mb-4" />
+  <div class="row">
+    <div class="col-xl-4">
+      <!-- Profile picture card-->
+      <div class="card mb-4 mb-xl-0">
+        <div *ngIf="user.role != 'teacher'" class="card-header">
+          Profile Picture
+        </div>
+        <div *ngIf="user.role == 'teacher'" class="card-header">
+          Curriculum vitae
+        </div>
+        <div class="card-body text-center">
+          <!-- Profile picture image-->
+          <img
+            *ngIf="user.role != 'teacher'"
+            style="width: 60%; height: 300px"
+            class="img-account-profile rounded-circle mb-2"
+            [src]="user.avatar"
+            alt=""
+          />
+
+          <embed
+            *ngIf="user.role == 'teacher'"
+            [src]="user.cv | safe"
+            style="width: 100%; height: 300px"
+            type="application/pdf"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-8">
+      <!-- Account details card-->
+      <div class="card mb-4">
+        <div class="card-header">Account Details</div>
+        <div class="card-body">
+          <form [formGroup]="profileForm">
+            <!-- Form Group (username)-->
+
+            <!-- Form Row-->
+            <div class="row gx-3 mb-3">
+              <!-- Form Group (first name)-->
+              <div class="col-md-6">
+                <label class="small mb-1" for="inputFirstName"
+                  >First name</label
+                >
+                <input
+                  class="form-control"
+                  id="inputFirstName"
+                  type="text"
+                  placeholder="Enter your new first name"
+                  formControlName="firstName"
+                />
+                <div
+                  *ngIf="
+                    profileForm.controls['firstName'].invalid &&
+                    (profileForm.controls['firstName'].touched ||
+                      profileForm.controls['firstName'].dirty)
+                  "
+                >
+                  <div
+                    *ngIf="profileForm.controls['firstName'].errors?.['required']"
+                    style="color: red"
+                  >
+                    first name is required
+                  </div>
+                </div>
+              </div>
+              <!-- Form Group (last name)-->
+              <div class="col-md-6">
+                <label class="small mb-1" for="inputLastName">Last name</label>
+                <input
+                  new
+                  class="form-control"
+                  id="inputLastName"
+                  type="text"
+                  placeholder="Enter your new last name"
+                  formControlName="lastName"
+                />
+                <div
+                  *ngIf="
+                    profileForm.controls['lastName'].invalid &&
+                    (profileForm.controls['lastName'].touched ||
+                      profileForm.controls['lastName'].dirty)
+                  "
+                >
+                  <div
+                    *ngIf="profileForm.controls['lastName'].errors?.['required']"
+                    style="color: red"
+                  >
+                    last name is required
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Form Row        -->
+
+            <!-- Form Group (email address)-->
+            <div class="mb-3">
+              <label class="small mb-1" for="inputEmailAddress"
+                >New email address</label
+              >
+
+              <input
+                class="form-control"
+                id="inputEmailAddress"
+                type="email"
+                placeholder="Enter your new email address"
+                formControlName="email"
+              />
+              <div
+                *ngIf="
+                  profileForm.controls['email'].invalid &&
+                  (profileForm.controls['email'].touched ||
+                    profileForm.controls['email'].dirty)
+                "
+              >
+                <div
+                  *ngIf="profileForm.controls['email'].errors?.['required']"
+                  style="color: red"
+                >
+                  email is required
+                </div>
+                <div
+                  *ngIf="profileForm.controls['email'].errors?.['email']"
+                  style="color: red"
+                >
+                  email format is invalid
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="small mb-1" for="inputEmailAddress"
+                >New phone number</label
+              >
+              <input
+                class="form-control"
+                id="inputEmailAddress"
+                type="number"
+                placeholder="Enter your new phone number"
+                formControlName="telephone"
+              />
+              <div
+                *ngIf="
+                  profileForm.controls['telephone'].invalid &&
+                  (profileForm.controls['telephone'].touched ||
+                    profileForm.controls['telephone'].dirty)
+                "
+              >
+                <div
+                  *ngIf="profileForm.controls['telephone'].errors?.['required']"
+                  style="color: red"
+                >
+                  Phone number is required
+                </div>
+              </div>
+            </div>
+
+            <div class="row gx-3 mb-3">
+              <!-- Form Group (organization name)-->
+              <div class="col-md-6">
+                <label class="small mb-1" for="inputOrgName"
+                  >Old password</label
+                >
+                <input
+                  class="form-control"
+                  id="inputOrgName"
+                  type="password"
+                  placeholder="Enter your old password"
+                  formControlName="oldPassword"
+                />
+                <div
+                  *ngIf="
+                    profileForm.controls['oldPassword'].invalid &&
+                    (profileForm.controls['oldPassword'].touched ||
+                      profileForm.controls['oldPassword'].dirty)
+                  "
+                >
+                  <div
+                    *ngIf="profileForm.controls['oldPassword'].errors?.['required']"
+                    style="color: red"
+                  >
+                    Old password is required
+                  </div>
+                </div>
+              </div>
+              <!-- Form Group (location)-->
+              <div class="col-md-6">
+                <label class="small mb-1" for="inputLocation"
+                  >New password</label
+                >
+                <input
+                  class="form-control"
+                  id="inputLocation"
+                  type="password"
+                  placeholder="Enter your new password"
+                  formControlName="newPassword"
+                />
+                <div
+                  *ngIf="
+                    profileForm.controls['newPassword'].invalid &&
+                    (profileForm.controls['newPassword'].touched ||
+                      profileForm.controls['newPassword'].dirty)
+                  "
+                >
+                  <div
+                    *ngIf="profileForm.controls['newPassword'].errors?.['required']"
+                    style="color: red"
+                  >
+                    New password is required
+                  </div>
+
+                  <div
+                    *ngIf="profileForm.controls['newPassword'].errors?.['minlength']"
+                    style="color: red"
+                  >
+                    New password must have at least 6 chars
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Save changes button-->
+            <button
+              class="btn btn-primary"
+              (click)="saveChanges()"
+              type="button"
+              [disabled]="profileForm.invalid"
+            >
+              Save changes
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

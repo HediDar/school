@@ -111,14 +111,26 @@ route.post("/login", (req, res) => {
     .then((cryptedPwd) => {
       console.log(cryptedPwd);
       if (cryptedPwd) {
-        let user_to_send = {
-          id: myUser._id,
-          firstName: myUser.firstName,
-          lastName: myUser.lastName,
-          cv: myUser.cv,
-          avatar: myUser.avatar,
-          role: myUser.role,
-        };
+        let user_to_send;
+        myUser.role == "teacher"
+          ? (user_to_send = {
+              id: myUser._id,
+              firstName: myUser.firstName,
+              lastName: myUser.lastName,
+              cv: myUser.cv,
+              email: myUser.email,
+              telephone: myUser.telephone,
+              role: myUser.role,
+            })
+          : (user_to_send = {
+              id: myUser._id,
+              firstName: myUser.firstName,
+              lastName: myUser.lastName,
+              avatar: myUser.avatar,
+              email: myUser.email,
+              telephone: myUser.telephone,
+              role: myUser.role,
+            });
 
         // generate token
         const token = jwt.sign(user_to_send, secretKey, {
@@ -133,6 +145,72 @@ route.post("/login", (req, res) => {
         res.json({ message: "check your password" });
       }
     });
+});
+
+route.put("/editProfile", async function (req, res) {
+  // traitement de la requete
+  console.log("in BL edit profile");
+
+
+  let user = await User.findById(req.body.id);
+
+  if (!user) {
+    return res.json({ message: "Inexistant user" });
+  } else {
+    let findMail = await User.findOne({ email: req.body.email });
+
+    if (findMail) {
+      if (findMail._id != req.body.id) {
+        return res.json({ message: "Email already in use" });
+      }
+    }
+
+    let findPhone = await User.findOne({ telephone: req.body.telephone });
+
+    if (findPhone) {
+      if (findPhone._id != req.body.id) {
+        return res.json({ message: "Phone already in use" });
+      }
+    }
+    bcrypt.compare(req.body.oldPassword, user.password).then((pwdResult) => {
+      if (!pwdResult) {
+        return res.json({ message: "please check old pwd" });
+      } else {
+        bcrypt.hash(req.body.newPassword, 8).then((cryptedPwd) => {
+          let userToUpdate = user;
+          console.log(0, userToUpdate);
+          userToUpdate = {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            telephone: req.body.telephone,
+            password: cryptedPwd,
+          };
+
+          // let userObj = new User(userToUpdate);
+          // console.log(userObj);
+          // console.log(user._id);
+
+          User.updateOne({ _id: req.body.id }, userToUpdate).then(
+            (response) => {
+              console.log(response);
+              response.nModified == 1
+                ? res.json({ message: "user modified succesfully" })
+                : res.json({ message: "error" });
+            }
+          );
+        });
+      }
+    });
+  }
+});
+
+// get user by id
+route.get("/:id", (req, res) => {
+  console.log("in get user by id BL");
+  User.findById(req.params.id).then((doc) => {
+    res.json({ user: doc });
+  });
 });
 
 module.exports = route;

@@ -24,6 +24,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AuthGuard } from './services/auth.guard';
 import { TeacherOrAdminGuard } from './services/teacher-or-admin.guard';
+import { ConnectedGuard } from './services/connected.guard';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,7 @@ import { TeacherOrAdminGuard } from './services/teacher-or-admin.guard';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [AuthGuard,TeacherOrAdminGuard],
+  providers: [AuthGuard,TeacherOrAdminGuard,ConnectedGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
