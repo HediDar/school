@@ -33,6 +33,8 @@ export class LoginComponent implements OnInit {
           success.message == 'check your password'
         ) {
           this.errorMessage = 'check phone/pwd';
+        } else if (success.message == 'Your profile hasnt been approved yet') {
+          this.errorMessage = 'Your profile hasnt been approved yet';
         } else if (success.message == 'welcome') {
           sessionStorage.setItem('token', success.token);
 

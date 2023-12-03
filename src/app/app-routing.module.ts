@@ -10,6 +10,7 @@ import { AuthGuard } from './services/auth.guard';
 import { TeacherOrAdminGuard } from './services/teacher-or-admin.guard';
 import { ConnectedGuard } from './services/connected.guard';
 import { ProfileComponent } from './components/profile/profile.component';
+import { ManageUsersComponent } from './components/manage-users/manage-users.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -29,7 +30,16 @@ const routes: Routes = [
     canActivate: [TeacherOrAdminGuard],
   },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
-  { path: 'profile', component: ProfileComponent, canActivate: [ConnectedGuard] },
+  {
+    path: 'manageUsers',
+    component: ManageUsersComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [ConnectedGuard],
+  },
 ];
 
 @NgModule({

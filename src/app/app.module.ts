@@ -25,6 +25,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AuthGuard } from './services/auth.guard';
 import { TeacherOrAdminGuard } from './services/teacher-or-admin.guard';
 import { ConnectedGuard } from './services/connected.guard';
+import { ManageUsersComponent } from './components/manage-users/manage-users.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ConnectedGuard } from './services/connected.guard';
     AdminCoursesComponent,
     AdminComponent,
     ProfileComponent,
+    ManageUsersComponent,
   ],
   imports: [
     BrowserModule,

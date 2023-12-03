@@ -59,6 +59,10 @@ export class SignupComponent implements OnInit {
       this.signupForm.value.speciality = this.speciality;
     this.signupForm.value.role = this.role;
 
+    if (this.role == 'teacher') {
+      this.signupForm.value.status = 'NOK';
+    }
+
     this.userService
       .signUp(this.signupForm.value, this.signupForm.value.file)
       .subscribe(

@@ -11,6 +11,7 @@ const userSchema = mongoose.Schema({
   role: String,
   cv: String,
   avatar: String,
+  status: String,
 });
 
 const user = mongoose.model("User", userSchema);

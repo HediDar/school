@@ -111,6 +111,12 @@ route.post("/login", (req, res) => {
     .then((cryptedPwd) => {
       console.log(cryptedPwd);
       if (cryptedPwd) {
+        if (myUser.role == "teacher" && myUser.status == "NOK") {
+          return res.json({
+            message: "Your profile hasnt been approved yet",
+          });
+        }
+
         let user_to_send;
         myUser.role == "teacher"
           ? (user_to_send = {
@@ -150,7 +156,6 @@ route.post("/login", (req, res) => {
 route.put("/editProfile", async function (req, res) {
   // traitement de la requete
   console.log("in BL edit profile");
-
 
   let user = await User.findById(req.body.id);
 
@@ -210,6 +215,18 @@ route.get("/:id", (req, res) => {
   console.log("in get user by id BL");
   User.findById(req.params.id).then((doc) => {
     res.json({ user: doc });
+  });
+});
+
+// BL delete user
+
+route.delete("/:id", (req, res) => {
+  // traitement de la requete
+  console.log("in delete user logic");
+  User.deleteOne({ _id: req.params.id }).then((response) => {
+    response.deletedCount == 1
+      ? res.json({ message: "deleted succesfully" })
+      : res.json({ message: "error" });
   });
 });
 

@@ -24,12 +24,17 @@ export class UserService {
     );
   }
 
-
-
   getUserById(id: any) {
     return this.httpClient.get<{ user: any }>(`${this.userUrl}/${id}`);
   }
 
+  deleteUserById(id: string) {
+    return this.httpClient.delete<{ message: string }>(`${this.userUrl}/${id}`);
+  }
+
+  getAllUsers() {
+    return this.httpClient.get<{ users: any }>(`${this.userUrl}`);
+  }
 
   signUp(obj: any, file: File) {
     let formData = new FormData();
@@ -40,6 +45,7 @@ export class UserService {
     formData.append('password', obj.password);
     formData.append('adresse', obj.adresse);
     formData.append('telephone', obj.telephone);
+    formData.append('status', obj.status);
     formData.append('role', obj.role);
     if (obj.role == 'teacher') formData.append('speciality', obj.speciality);
 
