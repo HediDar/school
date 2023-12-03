@@ -25,8 +25,8 @@ export class ManageUsersComponent implements OnInit {
     );
   }
 
-  showCV() {
-    alert('show');
+  showCV(cv:any) {
+    window.open(cv, '_blank');
   }
   acceptUser(id: string) {
     alert('accept');
