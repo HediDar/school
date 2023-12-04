@@ -55,7 +55,9 @@ route.post(
   multer({ storage: storage }).single("file"),
   (req, res) => {
     console.log("in signup BL");
+
     console.log(req.body);
+
     let returnBool = 0;
 
     User.findOne({ email: req.body.email }).then((findedUser) => {
@@ -73,40 +75,64 @@ route.post(
                     !findedUser ||
                     (findedUser && findedUser.role != "student")
                   ) {
-                    console.log(2);
-                    returnBool = 1;
                     return res.json({
                       message:
                         "There is no student subscribed with this number",
                     });
-                  }
-
-                  let user = new User(req.body);
-                  bcrypt.hash(req.body.password, 8).then((cryptedPwd) => {
-                    req.body.password = cryptedPwd;
-                    if (!req.file) {
-                      return res.json({
-                        message: "You must select a file for your user",
-                      });
-                    }
-                    if (req.body.role != "teacher")
-                      req.body.avatar = `http://localhost:3000/files/${req.file.filename}`;
-                    else
-                      req.body.cv = `http://localhost:3000/files/${req.file.filename}`;
+                  } else {
                     let user = new User(req.body);
-                    user.save(async function (error, doc) {
-                      console.log("here doc", doc);
-                      if (error) {
-                        res.json({
-                          message: "an error occured while saving user",
+                    bcrypt.hash(req.body.password, 8).then((cryptedPwd) => {
+                      req.body.password = cryptedPwd;
+                      if (!req.file) {
+                        return res.json({
+                          message: "You must select a file for your user",
                         });
-                      } else {
-                        res.json({ message: "user added succesfully" });
                       }
+                      if (req.body.role != "teacher")
+                        req.body.avatar = `http://localhost:3000/files/${req.file.filename}`;
+                      else
+                        req.body.cv = `http://localhost:3000/files/${req.file.filename}`;
+                      let user = new User(req.body);
+                      user.save(async function (error, doc) {
+                        console.log("here doc", doc);
+                        if (error) {
+                          res.json({
+                            message: "an error occured while saving user",
+                          });
+                        } else {
+                          res.json({ message: "user added succesfully" });
+                        }
+                      });
                     });
-                  });
+                  }
                 }
               );
+            }
+            if (req.body.role !== "parent") {
+              let user = new User(req.body);
+              bcrypt.hash(req.body.password, 8).then((cryptedPwd) => {
+                req.body.password = cryptedPwd;
+                if (!req.file) {
+                  return res.json({
+                    message: "You must select a file for your user",
+                  });
+                }
+                if (req.body.role != "teacher")
+                  req.body.avatar = `http://localhost:3000/files/${req.file.filename}`;
+                else
+                  req.body.cv = `http://localhost:3000/files/${req.file.filename}`;
+                let user = new User(req.body);
+                user.save(async function (error, doc) {
+                  console.log("here doc", doc);
+                  if (error) {
+                    res.json({
+                      message: "an error occured while saving user",
+                    });
+                  } else {
+                    res.json({ message: "user added succesfully" });
+                  }
+                });
+              });
             }
           }
         });
@@ -114,6 +140,8 @@ route.post(
     });
   }
 );
+
+function addUser(req, res) {}
 
 //business logic login
 route.post("/login", (req, res) => {

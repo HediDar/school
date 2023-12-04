@@ -52,7 +52,6 @@ export class UserService {
     formData.append('password', obj.password);
     formData.append('adresse', obj.adresse);
     formData.append('telephone', obj.telephone);
-    formData.append('status', obj.status);
     formData.append('role', obj.role);
     if (obj.role == 'teacher') {
       formData.append('speciality', obj.speciality);
