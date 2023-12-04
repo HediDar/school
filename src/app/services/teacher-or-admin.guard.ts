@@ -19,11 +19,12 @@ export class TeacherOrAdminGuard implements CanActivate {
     state: RouterStateSnapshot
   ): boolean | Promise<boolean> {
     var isAuthenticated = this.getToken();
+
     if (!isAuthenticated) {
       this.router.navigate(['/login']);
     } else {
       let user: any = this.decodeToken(sessionStorage.getItem('token'));
-      if (user.role != 'admin' || user.role != 'teacher') {
+      if (user.role != 'admin' && user.role != 'teacher') {
         this.router.navigate(['/']);
       }
     }

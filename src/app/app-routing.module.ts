@@ -25,7 +25,18 @@ const routes: Routes = [
     canActivate: [TeacherOrAdminGuard],
   },
   {
+    path: 'editCourse/:id',
+    component: AddOrEditCourseComponent,
+    canActivate: [TeacherOrAdminGuard],
+  },
+  {
     path: 'myCourses',
+    component: CoursesTabComponent,
+    canActivate: [TeacherOrAdminGuard],
+  },
+
+  {
+    path: 'allCourses',
     component: CoursesTabComponent,
     canActivate: [TeacherOrAdminGuard],
   },

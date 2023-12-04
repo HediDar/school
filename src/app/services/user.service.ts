@@ -54,7 +54,13 @@ export class UserService {
     formData.append('telephone', obj.telephone);
     formData.append('status', obj.status);
     formData.append('role', obj.role);
-    if (obj.role == 'teacher') formData.append('speciality', obj.speciality);
+    if (obj.role == 'teacher') {
+      formData.append('speciality', obj.speciality);
+      formData.append('status', obj.status);
+    }
+
+    if (obj.role == 'parent')
+      formData.append('childTelephone', obj.childTelephone);
 
     console.log(formData);
 

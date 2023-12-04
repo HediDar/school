@@ -164,6 +164,30 @@
             formControlName="telephone"
           />
         </div>
+        <div *ngIf="role == 'parent'">
+          <div
+            *ngIf="
+              signupForm.controls['childTelephone'].invalid &&
+              (signupForm.controls['childTelephone'].touched ||
+                signupForm.controls['childTelephone'].dirty)
+            "
+          >
+            <div
+              *ngIf="signupForm.controls['childTelephone'].errors?.['required']"
+              style="color: red"
+            >
+              Child telephone is required
+            </div>
+          </div>
+        </div>
+        <div class="form-outline mb-4" *ngIf="role == 'parent'">
+          <input
+            type="number"
+            class="form-control form-control-lg"
+            placeholder="Enter child telephone"
+            formControlName="childTelephone"
+          />
+        </div>
 
         <select
           class="form-select form-control form-select-lg mb-3"

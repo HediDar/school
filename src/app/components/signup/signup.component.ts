@@ -36,32 +36,47 @@ export class SignupComponent implements OnInit {
       this.role = 'admin';
     }
 
-    this.signupForm = this.formBuilder.group(
-      {
-        firstName: ['', [Validators.required]],
-        lastName: ['', [Validators.required]],
-        email: ['', [Validators.required, Validators.email]],
-        adresse: ['', [Validators.required]],
-        telephone: ['', [Validators.required]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-        confirmPassword: [''],
-        file: [''],
-      },
-      {
-        validator: MustMatch('password', 'confirmPassword'),
-      }
-    );
-
-    console.log(this.role);
+    if (this.role !== 'parent') {
+      this.signupForm = this.formBuilder.group(
+        {
+          firstName: ['', [Validators.required]],
+          lastName: ['', [Validators.required]],
+          email: ['', [Validators.required, Validators.email]],
+          adresse: ['', [Validators.required]],
+          telephone: ['', [Validators.required]],
+          password: ['', [Validators.required, Validators.minLength(6)]],
+          confirmPassword: [''],
+          file: [''],
+        },
+        {
+          validator: MustMatch('password', 'confirmPassword'),
+        }
+      );
+    } else {
+      this.signupForm = this.formBuilder.group(
+        {
+          firstName: ['', [Validators.required]],
+          lastName: ['', [Validators.required]],
+          email: ['', [Validators.required, Validators.email]],
+          adresse: ['', [Validators.required]],
+          telephone: ['', [Validators.required]],
+          childTelephone: ['', [Validators.required]],
+          password: ['', [Validators.required, Validators.minLength(6)]],
+          confirmPassword: [''],
+          file: [''],
+        },
+        {
+          validator: MustMatch('password', 'confirmPassword'),
+        }
+      );
+    }
   }
   signup() {
-    if (this.role == 'teacher')
-      this.signupForm.value.speciality = this.speciality;
-    this.signupForm.value.role = this.role;
-
     if (this.role == 'teacher') {
+      this.signupForm.value.speciality = this.speciality;
       this.signupForm.value.status = 'NOK';
     }
+    this.signupForm.value.role = this.role;
 
     this.userService
       .signUp(this.signupForm.value, this.signupForm.value.file)
@@ -76,6 +91,10 @@ export class SignupComponent implements OnInit {
             success.message == 'You must select a file for your user'
           ) {
             alert('You must select a file for your user!');
+          } else if (
+            success.message == 'There is no student subscribed with this number'
+          ) {
+            alert('There is no student subscribed with this number!');
           } else {
             alert("you've been subscribed succesfully!");
             this.router.navigate(['login']);

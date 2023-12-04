@@ -1,1 +1,127 @@
-<p>add-or-edit-course works!</p>
+<app-welcome [title]="title"></app-welcome>
+
+<div class="container py-5">
+  <div class="row d-flex">
+    <div class="col-md-8 col-lg-7 col-xl-6">
+      <img
+        src="../../../assets/img/addCourse.png"
+        class="img-fluid"
+        alt="Phone image"
+      />
+    </div>
+
+    <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1 mt-5">
+      <form></form>
+      <form [formGroup]="addCourseForm">
+        <div
+          *ngIf="
+            addCourseForm.controls['name'].invalid &&
+            (addCourseForm.controls['name'].touched ||
+              addCourseForm.controls['name'].dirty)
+          "
+        >
+          <div
+            *ngIf="addCourseForm.controls['name'].errors?.['required']"
+            style="color: red"
+          >
+            Name is required
+          </div>
+        </div>
+        <div class="form-outline mb-4">
+          <input
+            text="number"
+            class="form-control form-control-lg"
+            placeholder="Enter course name"
+            formControlName="name"
+          />
+        </div>
+
+        <div
+          *ngIf="
+            addCourseForm.controls['duration'].invalid &&
+            (addCourseForm.controls['duration'].touched ||
+              addCourseForm.controls['duration'].dirty)
+          "
+        >
+          <div
+            *ngIf="addCourseForm.controls['duration'].errors?.['required']"
+            style="color: red"
+          >
+            duration is required
+          </div>
+        </div>
+
+        <div class="form-outline mb-4">
+          <input
+            text="number"
+            class="form-control form-control-lg"
+            placeholder="Enter duration"
+            formControlName="duration"
+          />
+        </div>
+
+        <div
+          *ngIf="
+            addCourseForm.controls['description'].invalid &&
+            (addCourseForm.controls['description'].touched ||
+              addCourseForm.controls['description'].dirty)
+          "
+        >
+          <div
+            *ngIf="addCourseForm.controls['description'].errors?.['required']"
+            style="color: red"
+          >
+            Description is required
+          </div>
+        </div>
+        <div class="form-outline mb-4">
+          <textarea
+            class="form-control"
+            placeholder="Enter description"
+            id="exampleFormControlTextarea1"
+            rows="3"
+            formControlName="description"
+          ></textarea>
+        </div>
+
+        <div class="form-group" style="visibility: hidden; height: 5px">
+          <input
+            #filePicker
+            type="file"
+            class="form-control"
+            (change)="onFileSelected($event)"
+          />
+        </div>
+        <div style="margin-bottom: 10px">
+          <button class="btn btn-success" (click)="filePicker.click()">
+            <span>Select course image</span>
+          </button>
+        </div>
+
+        <button
+        *ngIf="title=='Add course'"
+          type="submit"
+          (click)="addCourse()"
+          class="btn btn-primary btn-lg btn-block"
+          [disabled]="addCourseForm.invalid"
+        >
+          Add course
+        </button>
+
+        <button
+        type="submit"
+        *ngIf="title=='Edit course'"
+        (click)="editCourse()"
+        class="btn btn-primary btn-lg btn-block"
+        [disabled]="addCourseForm.invalid"
+      >
+        Edit course
+      </button>
+
+        <div class="text-center mt-2">
+          <img [src]="filePreview" width="300px" style="margin-bottom: 20px" alt="" />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

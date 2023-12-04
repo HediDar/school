@@ -46,7 +46,9 @@ app.use("/files", express.static(path.join("backend/files")));
 // on define les types qu'on accepte seulement, avec leurs extensions auxquels on definit
 
 const UserRouter = require("./routes/users");
+const CourseRouter = require("./routes/courses");
 
 app.use("/users", UserRouter);
+app.use("/courses", CourseRouter);
 
 module.exports = app;

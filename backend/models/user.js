@@ -6,12 +6,19 @@ const userSchema = mongoose.Schema({
   email: String,
   password: String,
   telephone: String,
+  childTelephone: String,
   speciality: String,
   adresse: String,
   role: String,
   cv: String,
   avatar: String,
   status: String,
+  courses: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Course",
+    },
+  ],
 });
 
 const user = mongoose.model("User", userSchema);
