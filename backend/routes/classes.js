@@ -82,4 +82,26 @@ route.delete("/:id", (req, res) => {
   });
 });
 
+//business logic get class by id
+route.get("/:id", (req, res) => {
+  // traitement de la requete
+
+  console.log("business logic du getClassById");
+  //{_id:req.params.id}== la condition de recherche
+  myClass
+    .findOne({ _id: req.params.id })
+    .populate("students")
+    .populate("course")
+    .populate("teacher")
+    .then((doc) => {
+      res.json({ class: doc });
+    });
+});
+
+// update class
+route.put("", (req, res) => {
+  console.log("update class");
+  console.log(req.body);
+});
+
 module.exports = route;

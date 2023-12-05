@@ -29,7 +29,7 @@ export class ManageClassesComponent implements OnInit {
     );
   }
   updateClass(id: string) {
-    this.router.navigate(['editclass/' + id]);
+    this.router.navigate([`editClass/${id}`]);
   }
 
   getAllClasses() {

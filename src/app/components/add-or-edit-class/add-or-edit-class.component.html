@@ -1,6 +1,15 @@
 <app-welcome [title]="title"></app-welcome>
+<div class="container mt-5 mb-5">
+  <div *ngIf="dataMissing" class="row">
+    <div class="col-4"></div>
+    <div class="col-4 text-center">
+      There are some data missing in the DB for this component
+    </div>
+    <div class="col-4"></div>
+  </div>
+</div>
 
-<div class="container py-5">
+<div *ngIf="!dataMissing" class="container py-5">
   <div class="row d-flex">
     <div class="col-md-8 col-lg-7 col-xl-6">
       <img
@@ -62,6 +71,21 @@
 
         <div class="form-outline mb-4">
           <select
+            *ngIf="title == 'Update class'"
+            class="form-select form-control form-select-lg mb-3"
+            (change)="selectCourse($event)"
+          >
+            <option
+              [selected]="isSelectedCourse(c._id)"
+              *ngFor="let c of allCourses"
+              [value]="c._id"
+            >
+              Course: {{ c.name }}
+            </option>
+          </select>
+
+          <select
+            *ngIf="title != 'Update class'"
             class="form-select form-control form-select-lg mb-3"
             (change)="selectCourse($event)"
           >
@@ -73,6 +97,20 @@
 
         <div class="form-outline mb-4">
           <select
+            *ngIf="title == 'Update class'"
+            class="form-select form-control form-select-lg mb-3"
+            (change)="selectTeacher($event)"
+          >
+            <option
+              *ngFor="let t of allTeachers"
+              [value]="t._id"
+              [selected]="isSelectedTeacher(t._id)"
+            >
+              Teacher: {{ t.firstName }} {{ t.lastName }}
+            </option>
+          </select>
+          <select
+            *ngIf="title != 'Update class'"
             class="form-select form-control form-select-lg mb-3"
             (change)="selectTeacher($event)"
           >
@@ -88,6 +126,15 @@
 
         <div class="form-outline mb-4" *ngFor="let s of allStudents">
           <input
+            *ngIf="title == 'Update class'"
+            type="checkbox"
+            [value]="s.id"
+            [checked]="isChecked(s._id)"
+            (change)="selectStudent($event, s._id)"
+          />
+
+          <input
+            *ngIf="title != 'Update class'"
             type="checkbox"
             [value]="s.id"
             (change)="selectStudent($event, s._id)"
@@ -107,7 +154,7 @@
 
         <button
           type="submit"
-          *ngIf="title == 'Edit class'"
+          *ngIf="title == 'Update class'"
           (click)="editClass()"
           class="btn btn-primary btn-lg btn-block"
           [disabled]="addClassForm.invalid"

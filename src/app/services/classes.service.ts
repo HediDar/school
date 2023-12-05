@@ -25,4 +25,8 @@ export class ClassesService {
   addClass(obj: any) {
     return this.httpClient.post<{ message: string }>(this.classUrl, obj);
   }
+
+  updateClass(obj: any) {
+    return this.httpClient.put<{ message: string }>(this.classUrl, obj);
+  }
 }
