@@ -43,6 +43,14 @@ export class UserService {
     return this.httpClient.get<{ users: any }>(`${this.userUrl}`);
   }
 
+  getAllTeachers() {
+    return this.httpClient.get<{ users: any }>(`${this.userUrl}/teachers`);
+  }
+
+  getAllStudents() {
+    return this.httpClient.get<{ users: any }>(`${this.userUrl}/students`);
+  }
+
   signUp(obj: any, file: File) {
     let formData = new FormData();
     formData.append('file', file);

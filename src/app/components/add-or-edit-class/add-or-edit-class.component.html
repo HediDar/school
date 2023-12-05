@@ -1,0 +1,120 @@
+<app-welcome [title]="title"></app-welcome>
+
+<div class="container py-5">
+  <div class="row d-flex">
+    <div class="col-md-8 col-lg-7 col-xl-6">
+      <img
+        src="../../../assets/img/addCourse.png"
+        class="img-fluid"
+        alt="Phone image"
+      />
+    </div>
+
+    <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1 mt-5">
+      <form></form>
+      <form [formGroup]="addClassForm">
+        <div
+          *ngIf="
+            addClassForm.controls['name'].invalid &&
+            (addClassForm.controls['name'].touched ||
+              addClassForm.controls['name'].dirty)
+          "
+        >
+          <div
+            *ngIf="addClassForm.controls['name'].errors?.['required']"
+            style="color: red"
+          >
+            Name is required
+          </div>
+        </div>
+        <div class="form-outline mb-4">
+          <input
+            text="number"
+            class="form-control form-control-lg"
+            placeholder="Enter class name"
+            formControlName="name"
+          />
+        </div>
+
+        <div
+          *ngIf="
+            addClassForm.controls['description'].invalid &&
+            (addClassForm.controls['description'].touched ||
+              addClassForm.controls['description'].dirty)
+          "
+        >
+          <div
+            *ngIf="addClassForm.controls['description'].errors?.['required']"
+            style="color: red"
+          >
+            Description is required
+          </div>
+        </div>
+        <div class="form-outline mb-4">
+          <textarea
+            class="form-control"
+            placeholder="Enter description"
+            id="exampleFormControlTextarea1"
+            rows="3"
+            formControlName="description"
+          ></textarea>
+        </div>
+
+        <div class="form-outline mb-4">
+          <select
+            class="form-select form-control form-select-lg mb-3"
+            (change)="selectCourse($event)"
+          >
+            <option *ngFor="let c of allCourses" [value]="c._id">
+              Course: {{ c.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-outline mb-4">
+          <select
+            class="form-select form-control form-select-lg mb-3"
+            (change)="selectTeacher($event)"
+          >
+            <option *ngFor="let t of allTeachers" [value]="t._id">
+              Teacher: {{ t.firstName }} {{ t.lastName }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-outline mb-4">
+          <label>Select students for this course:</label>
+        </div>
+
+        <div class="form-outline mb-4" *ngFor="let s of allStudents">
+          <input
+            type="checkbox"
+            [value]="s.id"
+            (change)="selectStudent($event, s._id)"
+          />
+          {{ s.firstName }} {{ s.lastName }}
+        </div>
+
+        <button
+          *ngIf="title == 'Add class'"
+          type="submit"
+          (click)="addClass()"
+          class="btn btn-primary btn-lg btn-block"
+          [disabled]="addClassForm.invalid"
+        >
+          Add class
+        </button>
+
+        <button
+          type="submit"
+          *ngIf="title == 'Edit class'"
+          (click)="editClass()"
+          class="btn btn-primary btn-lg btn-block"
+          [disabled]="addClassForm.invalid"
+        >
+          Edit class
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

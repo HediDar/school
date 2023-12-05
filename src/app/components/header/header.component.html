@@ -54,9 +54,13 @@
                       <li *ngIf="isLoggedIn() && role == 'admin'">
                         <a routerLink="admin">Admin</a>
                         <ul class="submenu">
+                          <li><a routerLink="addClass">Add class</a></li>
                           <li><a routerLink="manageUsers">Manage users</a></li>
                           <li>
                             <a href="blog_details.html">Manage courses</a>
+                          </li>
+                          <li>
+                            <a routerLink="manageClasses">Manage classes</a>
                           </li>
                         </ul>
                       </li>

@@ -26,6 +26,8 @@ import { AuthGuard } from './services/auth.guard';
 import { TeacherOrAdminGuard } from './services/teacher-or-admin.guard';
 import { ConnectedGuard } from './services/connected.guard';
 import { ManageUsersComponent } from './components/manage-users/manage-users.component';
+import { AddOrEditClassComponent } from './components/add-or-edit-class/add-or-edit-class.component';
+import { ManageClassesComponent } from './components/manage-classes/manage-classes.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,8 @@ import { ManageUsersComponent } from './components/manage-users/manage-users.com
     AdminComponent,
     ProfileComponent,
     ManageUsersComponent,
+    AddOrEditClassComponent,
+    ManageClassesComponent,
   ],
   imports: [
     BrowserModule,

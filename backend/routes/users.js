@@ -49,6 +49,24 @@ route.get("", (req, res) => {
   });
 });
 
+// getAllStudents
+
+route.get("/students", (req, res) => {
+  console.log("get all students bl");
+  User.find({ role: "student" }).then((docs) => {
+    res.json({ users: docs });
+  });
+});
+
+// getAllTeachers
+
+route.get("/teachers", (req, res) => {
+  console.log("get all teachers bl");
+  User.find({ role: "teacher",status:"OK" }).then((docs) => {
+    res.json({ users: docs });
+  });
+});
+
 //business logic signUp
 route.post(
   "/signup",

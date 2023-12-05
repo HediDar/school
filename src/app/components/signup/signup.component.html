@@ -192,8 +192,8 @@
         <select
           class="form-select form-control form-select-lg mb-3"
           *ngIf="role == 'teacher'"
+          (change)="selectSpeciality($event)"
         >
-          (change)="selectSpeciality($event)" >
           <option value="web">Speciality: WEB</option>
           <option value="mobile">Speciality: Mobile</option>
           <option value="data science">Speciality: Data science</option>

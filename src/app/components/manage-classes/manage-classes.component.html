@@ -1,0 +1,57 @@
+<app-welcome title="Manage classes"></app-welcome>
+
+<div class="container mt-5 mb-5">
+  <div *ngIf="classes.length == 0" class="row">
+    <div class="col-4"></div>
+    <div class="col-4 text-center">No data found</div>
+    <div class="col-4"></div>
+  </div>
+
+  <table *ngIf="classes.length > 0" class="table">
+    <thead class="table-primary">
+      <tr>
+        <th scope="col">#</th>
+        <th class="text-center" scope="col">Name</th>
+        <th class="text-center" scope="col">description</th>
+        <th class="text-center" scope="col">Course</th>
+        <th class="text-center" scope="col">Teacher</th>
+        <th class="text-center" scope="col">Students</th>
+        <th class="text-center" scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of classes">
+        <td>{{ c._id }}</td>
+        <td class="text-center">{{ c.name }}</td>
+        <td class="text-center">{{ c.description }}</td>
+        <td class="text-center">{{ c.course.name }}</td>
+        <td class="text-center">
+          {{ c.teacher.firstName }} {{ c.teacher.lastName }}
+        </td>
+        <td class="text-center">
+          <div *ngFor="let s of c.students">
+            <span>{{ s.firstName }} {{ s.lastName }}</span
+            ><br />
+          </div>
+        </td>
+
+        <td class="text-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg btn-block"
+            (click)="deleteClass(c._id)"
+          >
+            Delete
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg btn-block"
+            (click)="updateClass(c._id)"
+          >
+            Update
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

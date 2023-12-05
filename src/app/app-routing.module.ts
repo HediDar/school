@@ -11,6 +11,8 @@ import { TeacherOrAdminGuard } from './services/teacher-or-admin.guard';
 import { ConnectedGuard } from './services/connected.guard';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ManageUsersComponent } from './components/manage-users/manage-users.component';
+import { AddOrEditClassComponent } from './components/add-or-edit-class/add-or-edit-class.component';
+import { ManageClassesComponent } from './components/manage-classes/manage-classes.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,6 +21,22 @@ const routes: Routes = [
   { path: 'signupTeacher', component: SignupComponent },
   { path: 'signupParent', component: SignupComponent },
   { path: 'signupAdmin', component: SignupComponent },
+  {
+    path: 'manageClasses',
+    component: ManageClassesComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'addClass',
+    component: AddOrEditClassComponent,
+    canActivate: [AuthGuard],
+  },
+
+  {
+    path: 'editClass/:id',
+    component: AddOrEditClassComponent,
+    canActivate: [AuthGuard],
+  },
   {
     path: 'addCourse',
     component: AddOrEditCourseComponent,

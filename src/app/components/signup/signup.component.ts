@@ -117,6 +117,8 @@ export class SignupComponent implements OnInit {
 
   selectSpeciality(event: any) {
     this.speciality = event.target.value;
+    console.log(this.speciality);
+    
   }
 
   onFileSelected(event: Event) {
