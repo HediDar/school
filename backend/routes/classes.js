@@ -71,6 +71,82 @@ route.post("", (req, res) => {
   }
 });
 
+// update class
+route.put("", (req, res) => {
+  console.log("update class");
+  console.log(11, req.body);
+
+  try {
+    Course.findById(req.body.courseId).then((course) => {
+      if (!course) {
+        return res.status(404).json({ message: "Course not found" });
+      }
+
+      //   we cant do team:req.body.teamId, because req.body.teamId est un string alors que l'attribut team doit etre object id
+      req.body.course = course._id;
+
+      myClass.findById(req.body._id).then(async (cls) => {
+        if (!cls) {
+          return res.status(404).json({ message: "Class not found" });
+        }
+        req.body._id = cls._id;
+
+        User.findById(req.body.teacherId).then(async (teacher) => {
+          if (!teacher) {
+            return res.status(404).json({ message: "Teacher not found" });
+          }
+          //   we cant do team:req.body.teamId, because req.body.teamId est un string alors que l'attribut team doit etre object id
+          req.body.teacher = teacher._id;
+
+          // const classs = new myClass(req.body);
+
+          const classs = new myClass({
+            _id: req.body._id, // Assuming you want to update the existing document
+            course: course._id,
+            teacher: teacher._id,
+            description: req.body.description,
+            name: req.body.name,
+          });
+          classs.students = [];
+
+          for (let i = 0; i < req.body.students.length; i++) {
+            await User.findById(req.body.students[i]).then((student) => {
+              if (!student) {
+                return res.status(404).json({ message: "Student not found" });
+              }
+
+              classs.students.push(student);
+
+              if (i == req.body.students.length - 1) {
+                myClass
+                  .updateOne({ _id: req.body._id }, classs)
+                  .then((response) => {
+                    console.log(response);
+                    response.nModified == 1
+                      ? res.json({ message: "class modified succesfully" })
+                      : res.json({ message: "error" });
+                  });
+              }
+            });
+          }
+          if (req.body.students.length == 0) {
+            myClass
+              .updateOne({ _id: req.body._id }, classs)
+              .then((response) => {
+                console.log(response);
+                response.nModified == 1
+                  ? res.json({ message: "class modified succesfully" })
+                  : res.json({ message: "error" });
+              });
+          }
+        });
+      });
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 // delete class
 route.delete("/:id", (req, res) => {
   // traitement de la requete
@@ -96,12 +172,6 @@ route.get("/:id", (req, res) => {
     .then((doc) => {
       res.json({ class: doc });
     });
-});
-
-// update class
-route.put("", (req, res) => {
-  console.log("update class");
-  console.log(req.body);
 });
 
 module.exports = route;

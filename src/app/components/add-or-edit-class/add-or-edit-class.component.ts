@@ -24,7 +24,6 @@ export class AddOrEditClassComponent implements OnInit {
   dataMissing: boolean = false;
   myClass: any = [];
   counter: number = 0;
-  intialised: boolean = false;
 
   constructor(
     private courseService: CourseService,
@@ -131,10 +130,15 @@ export class AddOrEditClassComponent implements OnInit {
       : (this.addClassForm.value.teacherId = this.teacherId2);
 
     this.addClassForm.value.students = this.studentsSelected;
+    this.addClassForm.value._id =
+      this.activatedRoute.snapshot.paramMap.get('id');
 
     this.classService.updateClass(this.addClassForm.value).subscribe(
       (success) => {
-        success;
+        console.log(success);
+        if (success.message == 'class modified succesfully') {
+          alert('class modified succesfully');
+        }
       },
       (error) => {
         console.log(error);
