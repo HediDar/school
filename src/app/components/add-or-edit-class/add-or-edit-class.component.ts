@@ -181,6 +181,10 @@ export class AddOrEditClassComponent implements OnInit {
   }
 
   isSelectedCourse(id: string) {
+    if (!this.myClass.course) {
+      return false;
+    }
+
     if (this.myClass.course._id == id) {
       this.courseId = id;
       return true;
@@ -188,6 +192,10 @@ export class AddOrEditClassComponent implements OnInit {
   }
 
   isSelectedTeacher(id: string) {
+    if (!this.myClass.teacher) {
+      return false;
+    }
+
     if (this.myClass.teacher._id == id) {
       this.teacherId = id;
       return true;

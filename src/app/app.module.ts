@@ -28,6 +28,8 @@ import { ConnectedGuard } from './services/connected.guard';
 import { ManageUsersComponent } from './components/manage-users/manage-users.component';
 import { AddOrEditClassComponent } from './components/add-or-edit-class/add-or-edit-class.component';
 import { ManageClassesComponent } from './components/manage-classes/manage-classes.component';
+import { MyAffectedClassesComponent } from './components/my-affected-classes/my-affected-classes.component';
+import { EvaluateStudentsComponent } from './components/evaluate-students/evaluate-students.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ import { ManageClassesComponent } from './components/manage-classes/manage-class
     ManageUsersComponent,
     AddOrEditClassComponent,
     ManageClassesComponent,
+    MyAffectedClassesComponent,
+    EvaluateStudentsComponent,
   ],
   imports: [
     BrowserModule,

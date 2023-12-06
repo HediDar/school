@@ -20,7 +20,7 @@ export class CoursesTabComponent implements OnInit {
 
     if (this.router.url == '/myCourses') {
       this.getMyCourses();
-    }
+    } else this.getAllCourses();
   }
 
   deleteCourse(id: string) {
@@ -29,7 +29,10 @@ export class CoursesTabComponent implements OnInit {
         console.log(success);
         if (success.message == 'deleted succesfully') {
           alert('Course deleted succesfully!');
-          this.getMyCourses();
+
+          if (this.router.url == '/myCourses') {
+            this.getMyCourses();
+          } else this.getAllCourses();
         }
       },
       (error) => {
@@ -48,6 +51,18 @@ export class CoursesTabComponent implements OnInit {
       (success) => {
         console.log(success);
         this.courses = success.teacherCourses;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  getAllCourses() {
+    this.courseService.getAllCourses().subscribe(
+      (success) => {
+        console.log(success);
+        this.courses = success.courses;
       },
       (error) => {
         console.log(error);

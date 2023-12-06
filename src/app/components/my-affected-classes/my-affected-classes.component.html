@@ -1,57 +1,57 @@
-<app-welcome title="Manage classes"></app-welcome>
+<app-welcome title="My classes"></app-welcome>
 
 <div class="container mt-5 mb-5">
-  <div *ngIf="classes.length == 0" class="row">
+  <div *ngIf="myClasses.length == 0" class="row">
     <div class="col-4"></div>
     <div class="col-4 text-center">No data found</div>
     <div class="col-4"></div>
   </div>
 
-  <table *ngIf="classes.length > 0" class="table">
+  <table *ngIf="myClasses.length > 0" class="table">
     <thead class="table-primary">
       <tr>
         <th scope="col">#</th>
-        <th class="text-center" scope="col">Name</th>
-        <th class="text-center" scope="col">description</th>
-        <th class="text-center" scope="col">Course</th>
+        <th class="text-center" scope="col">Class name</th>
+        <th class="text-center" scope="col">Class description</th>
+        <th class="text-center" scope="col">CourseName</th>
+        <th class="text-center" scope="col">duration</th>
         <th class="text-center" scope="col">Teacher</th>
         <th class="text-center" scope="col">Students</th>
-        <th class="text-center" scope="col">Action</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let c of classes">
+      <tr *ngFor="let c of myClasses">
         <td>{{ c._id }}</td>
         <td class="text-center">{{ c.name }}</td>
         <td class="text-center">{{ c.description }}</td>
         <td *ngIf="c.course" class="text-center">{{ c.course.name }}</td>
         <td *ngIf="!c.course" class="text-center">Course deleted</td>
+        <td *ngIf="c.course" class="text-center">{{ c.course.duration }}</td>
+        <td *ngIf="!c.course" class="text-center">----</td>
         <td *ngIf="c.teacher" class="text-center">
-          {{ c.teacher.firstName }} {{ c.teacher.lastName }}
+          Me
         </td>
-        <td *ngIf="!c.teacher" class="text-center">Teacher deleted</td>
-        <td class="text-center">
+        <!-- <td *ngIf="!c.teacher" class="text-center">Teacher deleted</td> -->
+        <td *ngIf="c.students.legnth > 0" class="text-center">
           <div *ngFor="let s of c.students">
             <span>{{ s.firstName }} {{ s.lastName }}</span
             ><br />
           </div>
         </td>
 
+        <td *ngIf="c.students.legnth > 0" class="text-center">
+          No students affected
+        </td>
+
         <td class="text-center">
           <button
             type="submit"
             class="btn btn-primary btn-lg btn-block"
-            (click)="deleteClass(c._id)"
+            (click)="evaluateStudents(c._id)"
           >
-            Delete
+            Evaluate students
           </button>
-          <button
-            type="submit"
-            class="btn btn-primary btn-lg btn-block"
-            (click)="updateClass(c._id)"
-          >
-            Update
-          </button>
+       
         </td>
       </tr>
     </tbody>

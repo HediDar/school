@@ -47,9 +47,11 @@ app.use("/files", express.static(path.join("backend/files")));
 
 const UserRouter = require("./routes/users");
 const CourseRouter = require("./routes/courses");
+const EvaluationRouter = require("./routes/evaluations");
 const ClassRouter = require("./routes/classes");
 
 app.use("/users", UserRouter);
+app.use("/evaluations", EvaluationRouter);
 app.use("/courses", CourseRouter);
 app.use("/classes", ClassRouter);
 

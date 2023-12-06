@@ -21,6 +21,23 @@ route.get("", (req, res) => {
     });
 });
 
+// getAllClasses
+
+route.get("/teacher/:id", (req, res) => {
+  console.log("get classes by id teacher");
+
+  myClass
+    .find({ teacher: req.params.id })
+    .populate("course")
+    .populate("students")
+    .populate("teacher")
+    .then((docs) => {
+      if (docs) {
+        res.json({ classes: docs });
+      } else res.json({ classes: [] });
+    });
+});
+
 // addClass
 
 route.post("", (req, res) => {
@@ -74,7 +91,6 @@ route.post("", (req, res) => {
 // update class
 route.put("", (req, res) => {
   console.log("update class");
-  console.log(11, req.body);
 
   try {
     Course.findById(req.body.courseId).then((course) => {
