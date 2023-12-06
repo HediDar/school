@@ -36,7 +36,9 @@ export class EvaluateStudentsComponent implements OnInit {
               .subscribe(
                 (success) => {
                   console.log(success);
-                  this.myEvaluations.push(success.evaluation);
+                  if (!success.message) {
+                    this.myEvaluations.push(success.evaluation);
+                  }
                 },
                 (error) => {
                   console.log(error);
@@ -51,9 +53,13 @@ export class EvaluateStudentsComponent implements OnInit {
   }
 
   getDefaultValueEvaluation(idStudent: string) {
-    const found = this.myEvaluations.find((element: any) => {
-      return element.student == idStudent;
-    });
+    let found: any;
+
+    if (this.myEvaluations.length > 0) {
+      found = this.myEvaluations.find((element: any) => {
+        return element.student == idStudent;
+      });
+    }
 
     if (found) {
       return found.evaluation;
@@ -61,30 +67,70 @@ export class EvaluateStudentsComponent implements OnInit {
   }
 
   getDefaultValueMark(idStudent: string) {
-    const found = this.myEvaluations.find((element: any) => {
-      return element.student == idStudent;
-    });
-
+    let found: any;
+    if (this.myEvaluations.length > 0) {
+      found = this.myEvaluations.find((element: any) => {
+        return element.student == idStudent;
+      });
+    }
     if (found) {
       return found.mark;
     } else return 0;
   }
 
-  evaluateStudent(studentId: string, mark: string, evaluation: string) {
-    this.evaluationService
-      .addOrEditEvaluation({
-        evaluation: evaluation,
-        mark: mark,
-        student: studentId,
-        class: this.myClass._id,
-      })
-      .subscribe(
-        (success) => {
-          console.log(success);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+  evaluateStudent(
+    studentId: string,
+    mark: string,
+    evaluation: string,
+    idStudent: string
+  ) {
+    let found: any;
+    let myMark;
+    if (mark == '') {
+      myMark = 0;
+    } else {
+      myMark = mark;
+    }
+
+    if (this.myEvaluations.length > 0) {
+      found = this.myEvaluations.find((element: any) => {
+        return element.student == idStudent;
+      });
+    }
+
+    if (!found) {
+      this.evaluationService
+        .addOrEditEvaluation({
+          evaluation: evaluation,
+          mark: myMark,
+          student: studentId,
+          class: this.myClass._id,
+        })
+        .subscribe(
+          (success) => {
+            console.log(success);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    } else {
+      this.evaluationService
+        .addOrEditEvaluation({
+          evaluation: evaluation,
+          mark: myMark,
+          student: studentId,
+          class: this.myClass._id,
+          idEvaluation: found._id,
+        })
+        .subscribe(
+          (success) => {
+            console.log(success);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    }
   }
 }

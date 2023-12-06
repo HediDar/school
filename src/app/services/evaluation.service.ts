@@ -13,7 +13,7 @@ export class EvaluationService {
   }
 
   getEvaluationByIdStudentAndClass(idStudent: any, idClass: any) {
-    return this.httpClient.get<{ evaluation: any }>(
+    return this.httpClient.get<{ evaluation: any; message: string }>(
       `${this.evaluationUrl}/${idStudent}/${idClass}`
     );
   }

@@ -46,7 +46,7 @@
           <input
             type="number"
             class="form-control form-control-lg"
-            placeholder="Enter Your mark"
+            placeholder="Mark"
             #mark
             [defaultValue]="getDefaultValueMark(s._id)"
             min="0"
@@ -58,7 +58,7 @@
           <button
             type="submit"
             class="btn btn-primary btn-lg btn-block"
-            (click)="evaluateStudent(s._id, mark.value, evaluation.value)"
+            (click)="evaluateStudent(s._id, mark.value, evaluation.value,s._id)"
           >
             Evaluate student
           </button>

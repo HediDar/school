@@ -62,7 +62,9 @@ route.get("/:idStudent/:idClass", (req, res) => {
     class: req.params.idClass,
     student: req.params.idStudent,
   }).then((doc) => {
-    res.json({ evaluation: doc });
+    doc
+      ? res.json({ evaluation: doc })
+      : res.json({ message: "no evaluation" });
   });
 });
 
