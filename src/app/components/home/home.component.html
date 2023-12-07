@@ -3,7 +3,32 @@
 platform"
 ></app-welcome>
 <app-services></app-services>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-xl-7 col-lg-8">
+      <div class="section-tittle text-center mb-55">
+        <h2>Explore top subjects</h2>
+      </div>
+    </div>
+  </div>
+</div>
 
-<app-courses-in-home></app-courses-in-home>
+<app-courses-in-home
+  *ngFor="let c of courses"
+  [course]="c"
+></app-courses-in-home>
 
-<app-teachers-in-home></app-teachers-in-home>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-xl-7 col-lg-8">
+      <div class="section-tittle text-center mb-55">
+        <h2>Community teachers</h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-teachers-in-home
+  *ngFor="let t of teachers"
+  [teacher]="t"
+></app-teachers-in-home>

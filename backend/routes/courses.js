@@ -47,9 +47,13 @@ route.get("/:id", (req, res) => {
 
   console.log("business logic du getCourseById");
   //{_id:req.params.id}== la condition de recherche
-  Course.findOne({ _id: req.params.id }).then((doc) => {
-    res.json({ course: doc });
-  });
+  Course.findOne({ _id: req.params.id })
+    .populate("teacher")
+    .then((doc) => {
+      doc
+        ? res.json({ course: doc })
+        : res.json({ message: "no course found" });
+    });
 });
 
 //business logic get courses by idTeacher

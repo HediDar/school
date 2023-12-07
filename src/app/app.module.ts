@@ -30,6 +30,8 @@ import { AddOrEditClassComponent } from './components/add-or-edit-class/add-or-e
 import { ManageClassesComponent } from './components/manage-classes/manage-classes.component';
 import { MyAffectedClassesComponent } from './components/my-affected-classes/my-affected-classes.component';
 import { EvaluateStudentsComponent } from './components/evaluate-students/evaluate-students.component';
+import { CourseDetailsComponent } from './components/course-details/course-details.component';
+import { SearchTeacherComponent } from './components/search-teacher/search-teacher.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,8 @@ import { EvaluateStudentsComponent } from './components/evaluate-students/evalua
     ManageClassesComponent,
     MyAffectedClassesComponent,
     EvaluateStudentsComponent,
+    CourseDetailsComponent,
+    SearchTeacherComponent,
   ],
   imports: [
     BrowserModule,

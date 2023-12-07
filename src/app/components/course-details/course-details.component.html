@@ -1,0 +1,44 @@
+<app-welcome title="Course details"></app-welcome>
+<div class="container mt-5 mb-5">
+  <div *ngIf="dataMissing" class="row">
+    <div class="col-4"></div>
+    <div class="col-4 text-center">We couldn't find the specific course</div>
+    <div class="col-4"></div>
+  </div>
+</div>
+
+<div *ngIf="!dataMissing" class="container py-5">
+  <div class="row d-flex">
+    <div class="col-md-8 col-lg-7 col-xl-6">
+      <img [src]="course.image" class="img-fluid" alt="Phone image" />
+    </div>
+
+    <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1 mt-5">
+      <div class="form-outline mb-4">
+        <h3 style="display: inline">Course Name:</h3>
+        <h4 style="display: inline" class="courseDetailsLabel">
+          {{ course.name }}
+        </h4>
+      </div>
+      <div class="form-outline mb-4">
+        <h3 style="display: inline">Course description:</h3>
+        <h4 style="display: inline" class="courseDetailsLabel">
+          {{ course.description }}
+        </h4>
+      </div>
+      <div class="form-outline mb-4">
+        <h3 style="display: inline">Course duration:</h3>
+        <h4 style="display: inline" class="courseDetailsLabel">
+          {{ course.duration }}
+        </h4>
+      </div>
+      <div class="form-outline mb-4">
+        <h3 style="display: inline">Created by:</h3>
+        <h4 style="display: inline" class="courseDetailsLabel">
+          Mr/Ms {{ course.teacher.firstName }}
+          {{ course.teacher.lastName }}
+        </h4>
+      </div>
+    </div>
+  </div>
+</div>

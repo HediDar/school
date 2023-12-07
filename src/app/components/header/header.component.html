@@ -60,7 +60,7 @@
                       </li>
 
                       <li *ngIf="isLoggedIn() && role == 'admin'">
-                        <a routerLink="admin">Admin</a>
+                        <a routerLink="#">Admin</a>
                         <ul class="submenu">
                           <li><a routerLink="addClass">Add class</a></li>
                           <li><a routerLink="manageUsers">Manage users</a></li>
@@ -72,6 +72,15 @@
                           </li>
                         </ul>
                       </li>
+
+                      <li
+                        *ngIf="
+                          isLoggedIn() && (role == 'admin' || role == 'teacher')
+                        "
+                      >
+                        <a routerLink="searchTeacher">Search teacher</a>
+                      </li>
+
                       <li *ngIf="isLoggedIn()">
                         <a routerLink="profile">My profile</a>
                       </li>

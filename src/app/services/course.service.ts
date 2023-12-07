@@ -9,7 +9,9 @@ export class CourseService {
   constructor(private httpClient: HttpClient) {}
 
   getCourseById(id: any) {
-    return this.httpClient.get<{ course: any }>(`${this.courseUrl}/${id}`);
+    return this.httpClient.get<{ course: any; message: string }>(
+      `${this.courseUrl}/${id}`
+    );
   }
 
   getCoursesByIdTeacher(id: any) {
