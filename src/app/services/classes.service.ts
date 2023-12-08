@@ -18,6 +18,14 @@ export class ClassesService {
     );
   }
 
+  getClassesByStudentPhone(phone: number) {
+    return this.httpClient.get<{
+      classes: any;
+      idStudent: string;
+      message: string;
+    }>(`${this.classUrl}/studentClassesByPhone/${phone}`);
+  }
+
   getClassesByIdTeacher(id: any) {
     return this.httpClient.get<{ classes: any }>(
       `${this.classUrl}/teacher/${id}`

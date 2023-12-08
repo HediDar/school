@@ -1,7 +1,57 @@
-<app-welcome title="My affected classes"></app-welcome>
+<app-welcome [title]="title"></app-welcome>
+
+<div class="container" *ngIf="showParent">
+  <div class="row">
+    <div class="col-4"></div>
+    <div class="col-4 text-center">
+      <form
+        style="margin-top: 50px"
+        #searchForm="ngForm"
+        (ngSubmit)="searchStudent()"
+      >
+        <div
+          *ngIf="searchForm.submitted && searchForm.invalid"
+          class="invalid- feedback"
+        >
+          <p style="color: red" *ngIf="mySearch.errors?.['required']">
+            Search input is required
+          </p>
+        </div>
+
+        <div class="form-outline mb-4">
+          <input
+            type="number"
+            class="form-control form-control-lg"
+            placeholder="Enter child's phone number"
+            name="search"
+            #mySearch="ngModel"
+            [(ngModel)]="searchInput"
+            [ngClass]="{
+              'is-invalid': searchForm.submitted && mySearch.invalid
+            }"
+            required
+          />
+        </div>
+
+        <div class="form-outline mb-4" *ngIf="notFoundForParentBool">
+          <span style="color: red"> No data found</span>
+        </div>
+
+        <button
+          [disabled]="!searchForm.valid"
+          type="submit"
+          class="btn btn-primary btn-lg btn-block"
+        >
+          Search my child classes
+        </button>
+      </form>
+    </div>
+    <div class="col-4"></div>
+  </div>
+</div>
 
 <div class="container mt-5 mb-5">
-  <div *ngIf="myClasses.length == 0" class="row">
+  <div *ngIf="myClasses.length == 0 && !showParent" class="row">
     <div class="col-4"></div>
     <div class="col-4 text-center">No data found</div>
     <div class="col-4"></div>

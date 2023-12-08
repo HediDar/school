@@ -37,18 +37,15 @@
                         <a routerLink="myCourses">My courses</a>
                       </li>
 
-                      <li
-                        *ngIf="
-                          isLoggedIn() && (role == 'teacher')
-                        "
-                      >
+                      <li *ngIf="isLoggedIn() && role == 'teacher'">
                         <a routerLink="myClasses">My affected classes</a>
                       </li>
 
                       <li *ngIf="isLoggedIn() && role == 'student'">
-                        <a *ngIf="role == 'student'" routerLink="studentClasses"
-                          >My classes</a
-                        >
+                        <a routerLink="studentClasses">My classes</a>
+                      </li>
+                      <li *ngIf="isLoggedIn() && role == 'parent'">
+                        <a routerLink="childClasses">My child classes</a>
                       </li>
 
                       <li *ngIf="isLoggedIn() && role == 'admin'">

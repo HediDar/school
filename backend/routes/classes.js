@@ -193,7 +193,7 @@ route.get("/:id", (req, res) => {
 route.get("/studentClasses/:id", (req, res) => {
   // traitement de la requete
 
-  console.log("business logic du getClassById");
+  console.log("business logic du getClassByIdstudent");
   //{_id:req.params.id}== la condition de recherche
   myClass
     .find()
@@ -217,6 +217,44 @@ route.get("/studentClasses/:id", (req, res) => {
 
       myNewTab.length > 0
         ? res.json({ classes: myNewTab, message: "data found" })
+        : res.json({ message: "no data found" });
+    });
+});
+
+//business logic get classes by id student
+route.get("/studentClassesByPhone/:phone", (req, res) => {
+  // traitement de la requete
+
+  console.log("business logic du getClassByPhoneCHild");
+  //{_id:req.params.id}== la condition de recherche
+  myClass
+    .find()
+    .populate("students")
+    .populate("course")
+    .populate("teacher")
+    .then((docs) => {
+      if (!docs) {
+        res.json({ message: "no data found" });
+      }
+      let myNewTab = [];
+      let idStudent;
+
+      for (let i = 0; i < docs.length; i++) {
+        for (let j = 0; j < docs[i].students.length; j++) {
+          if (docs[i].students[j].telephone == req.params.phone) {
+            idStudent = docs[i].students[j]._id;
+            myNewTab.push(docs[i]);
+            break;
+          }
+        }
+      }
+      // console.log("test",myNewTab[0].student_id);
+      myNewTab.length > 0
+        ? res.json({
+            classes: myNewTab,
+            idStudent: idStudent,
+            message: "data found",
+          })
         : res.json({ message: "no data found" });
     });
 });

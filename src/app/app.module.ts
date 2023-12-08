@@ -35,6 +35,7 @@ import { SearchTeacherComponent } from './components/search-teacher/search-teach
 import { StudentClassesComponent } from './components/student-classes/student-classes.component';
 import { StudentGuard } from './services/student.guard';
 import { StudentEvaluationComponent } from './components/student-evaluation/student-evaluation.component';
+import { ParentGuard } from './components/parent.guard';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,7 @@ import { StudentEvaluationComponent } from './components/student-evaluation/stud
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [AuthGuard, TeacherOrAdminGuard, ConnectedGuard, StudentGuard],
+  providers: [AuthGuard, TeacherOrAdminGuard, ConnectedGuard, StudentGuard,ParentGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

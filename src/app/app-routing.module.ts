@@ -19,6 +19,7 @@ import { CourseDetailsComponent } from './components/course-details/course-detai
 import { SearchTeacherComponent } from './components/search-teacher/search-teacher.component';
 import { StudentClassesComponent } from './components/student-classes/student-classes.component';
 import { StudentGuard } from './services/student.guard';
+import { ParentGuard } from './components/parent.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -76,6 +77,11 @@ const routes: Routes = [
     path: 'studentClasses',
     component: StudentClassesComponent,
     canActivate: [StudentGuard],
+  },
+  {
+    path: 'childClasses',
+    component: StudentClassesComponent,
+    canActivate: [ParentGuard],
   },
 
   {
