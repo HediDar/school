@@ -75,4 +75,18 @@ route.get("", (req, res) => {
   });
 });
 
+// get evaluations by id student and id class
+route.get("/:idStudent/:idClass", (req, res) => {
+  console.log("get evaluations by id student");
+  Evaluation.findOne({
+    student: req.params.idStudent,
+    class: req.params.idClass,
+  })
+  .then((doc) => {
+    doc
+      ? res.json({ evaluations: doc, message: "evaluation found" })
+      : res.json({ message: "No evaluation found" });
+  });
+});
+
 module.exports = route;

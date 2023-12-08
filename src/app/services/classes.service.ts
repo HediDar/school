@@ -12,6 +12,12 @@ export class ClassesService {
     return this.httpClient.get<{ class: any }>(`${this.classUrl}/${id}`);
   }
 
+  getClassesByIdStudent(idStudent: any) {
+    return this.httpClient.get<{ classes: any; message: string }>(
+      `${this.classUrl}/studentClasses/${idStudent}`
+    );
+  }
+
   getClassesByIdTeacher(id: any) {
     return this.httpClient.get<{ classes: any }>(
       `${this.classUrl}/teacher/${id}`

@@ -17,6 +17,8 @@ import { MyAffectedClassesComponent } from './components/my-affected-classes/my-
 import { EvaluateStudentsComponent } from './components/evaluate-students/evaluate-students.component';
 import { CourseDetailsComponent } from './components/course-details/course-details.component';
 import { SearchTeacherComponent } from './components/search-teacher/search-teacher.component';
+import { StudentClassesComponent } from './components/student-classes/student-classes.component';
+import { StudentGuard } from './services/student.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -68,6 +70,12 @@ const routes: Routes = [
     path: 'myClasses',
     component: MyAffectedClassesComponent,
     canActivate: [TeacherOrAdminGuard],
+  },
+
+  {
+    path: 'studentClasses',
+    component: StudentClassesComponent,
+    canActivate: [StudentGuard],
   },
 
   {

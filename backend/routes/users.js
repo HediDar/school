@@ -62,9 +62,18 @@ route.get("/students", (req, res) => {
 
 route.get("/teachers", (req, res) => {
   console.log("get all teachers bl");
-  User.find({ role: "teacher",status:"OK" }).then((docs) => {
+  User.find({ role: "teacher", status: "OK" }).then((docs) => {
     res.json({ users: docs });
   });
+});
+
+route.get("/teachers/:id", (req, res) => {
+  console.log("get teachers by speciality bl");
+  User.find({ role: "teacher", speciality: req.params.id, status: "OK" }).then(
+    (docs) => {
+      docs ? res.json({ users: docs }) : res.json({ users: [] });
+    }
+  );
 });
 
 //business logic signUp

@@ -42,7 +42,6 @@ route.get("/teacher/:id", (req, res) => {
 
 route.post("", (req, res) => {
   console.log("add class bl");
-  console.log(req.body);
 
   try {
     Course.findById(req.body.courseId).then((course) => {
@@ -187,6 +186,38 @@ route.get("/:id", (req, res) => {
     .populate("teacher")
     .then((doc) => {
       res.json({ class: doc });
+    });
+});
+
+//business logic get classes by id student
+route.get("/studentClasses/:id", (req, res) => {
+  // traitement de la requete
+
+  console.log("business logic du getClassById");
+  //{_id:req.params.id}== la condition de recherche
+  myClass
+    .find()
+    .populate("course")
+    .populate("teacher")
+    .then((docs) => {
+      if (!docs) {
+        res.json({ message: "no data found" });
+      }
+
+      let myNewTab = [];
+
+      for (let i = 0; i < docs.length; i++) {
+        for (let j = 0; j < docs[i].students.length; j++) {
+          if (docs[i].students[j]._id == req.params.id) {
+            myNewTab.push(docs[i]);
+            break;
+          }
+        }
+      }
+
+      myNewTab.length > 0
+        ? res.json({ classes: myNewTab, message: "data found" })
+        : res.json({ message: "no data found" });
     });
 });
 

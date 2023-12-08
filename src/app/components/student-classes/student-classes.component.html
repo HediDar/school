@@ -1,0 +1,66 @@
+<app-welcome title="My affected classes"></app-welcome>
+
+<div class="container mt-5 mb-5">
+  <div *ngIf="myClasses.length == 0" class="row">
+    <div class="col-4"></div>
+    <div class="col-4 text-center">No data found</div>
+    <div class="col-4"></div>
+  </div>
+
+  <table *ngIf="myClasses.length > 0" class="table">
+    <thead class="table-primary">
+      <tr>
+        <th scope="col">#</th>
+        <th class="text-center" scope="col">Class name</th>
+        <th class="text-center" scope="col">Class description</th>
+        <th class="text-center" scope="col">CourseName</th>
+        <th class="text-center" scope="col">duration</th>
+        <th class="text-center" scope="col">Teacher</th>
+        <th class="text-center" scope="col">Evaluation</th>
+        <th class="text-center" scope="col">Mark</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of myClasses">
+        <td>{{ c._id }}</td>
+        <td class="text-center">{{ c.name }}</td>
+        <td class="text-center">{{ c.description }}</td>
+        <td *ngIf="c.course" class="text-center">{{ c.course.name }}</td>
+        <td *ngIf="!c.course" class="text-center">Course deleted</td>
+        <td *ngIf="c.course" class="text-center">{{ c.course.duration }}</td>
+        <td *ngIf="!c.course" class="text-center">----</td>
+        <td *ngIf="c.teacher" class="text-center">
+          Ms/Mr {{ c.teacher.firstName }} {{ c.teacher.lastName }}
+        </td>
+        <td
+          style="color: red"
+          *ngIf="c.evaluation == 'not found'"
+          class="text-center"
+        >
+          Not evaluated yet
+        </td>
+        <td
+          style="color: red"
+          *ngIf="c.evaluation == 'not found'"
+          class="text-center"
+        >
+          Not evaluated yet
+        </td>
+        <td *ngIf="c.evaluation != 'not found'" class="text-center">
+          {{ c.evaluation.evaluation }}
+        </td>
+        <td
+          [ngStyle]="{
+            color: markColor(c.evaluation.mark)
+          }"
+          *ngIf="c.evaluation != 'not found'"
+          class="text-center"
+        >
+          {{ c.evaluation.mark }}
+        </td>
+
+        <!-- <td *ngIf="!c.teacher" class="text-center">Teacher deleted</td> -->
+      </tr>
+    </tbody>
+  </table>
+</div>

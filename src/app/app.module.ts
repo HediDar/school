@@ -32,6 +32,9 @@ import { MyAffectedClassesComponent } from './components/my-affected-classes/my-
 import { EvaluateStudentsComponent } from './components/evaluate-students/evaluate-students.component';
 import { CourseDetailsComponent } from './components/course-details/course-details.component';
 import { SearchTeacherComponent } from './components/search-teacher/search-teacher.component';
+import { StudentClassesComponent } from './components/student-classes/student-classes.component';
+import { StudentGuard } from './services/student.guard';
+import { StudentEvaluationComponent } from './components/student-evaluation/student-evaluation.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +62,8 @@ import { SearchTeacherComponent } from './components/search-teacher/search-teach
     EvaluateStudentsComponent,
     CourseDetailsComponent,
     SearchTeacherComponent,
+    StudentClassesComponent,
+    StudentEvaluationComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,7 +72,7 @@ import { SearchTeacherComponent } from './components/search-teacher/search-teach
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [AuthGuard,TeacherOrAdminGuard,ConnectedGuard],
+  providers: [AuthGuard, TeacherOrAdminGuard, ConnectedGuard, StudentGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

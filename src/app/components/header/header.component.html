@@ -39,23 +39,15 @@
 
                       <li
                         *ngIf="
-                          isLoggedIn() && (role == 'admin' || role == 'teacher')
+                          isLoggedIn() && (role == 'teacher')
                         "
                       >
                         <a routerLink="myClasses">My affected classes</a>
                       </li>
 
-                      <li
-                        *ngIf="
-                          isLoggedIn() &&
-                          (role == 'parent' || role == 'student')
-                        "
-                      >
-                        <a *ngIf="role == 'student'" routerLink="studentCourses"
-                          >My courses</a
-                        >
-                        <a *ngIf="role == 'parent'" routerLink="studentCourses"
-                          >My child courses</a
+                      <li *ngIf="isLoggedIn() && role == 'student'">
+                        <a *ngIf="role == 'student'" routerLink="studentClasses"
+                          >My classes</a
                         >
                       </li>
 

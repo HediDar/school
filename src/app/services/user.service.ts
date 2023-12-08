@@ -43,6 +43,12 @@ export class UserService {
     return this.httpClient.get<{ users: any }>(`${this.userUrl}`);
   }
 
+  getTeachersBySpeciality(speciality: string) {
+    return this.httpClient.get<{ users: any }>(
+      `${this.userUrl}/teachers/${speciality}`
+    );
+  }
+
   getAllTeachers() {
     return this.httpClient.get<{ users: any }>(`${this.userUrl}/teachers`);
   }

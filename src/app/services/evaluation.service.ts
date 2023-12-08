@@ -17,4 +17,10 @@ export class EvaluationService {
       `${this.evaluationUrl}/${idStudent}/${idClass}`
     );
   }
+
+  getEvaluationsByIdStudent(idStudent: any) {
+    return this.httpClient.get<{ evaluation: any; message: string }>(
+      `${this.evaluationUrl}/${idStudent}`
+    );
+  }
 }
